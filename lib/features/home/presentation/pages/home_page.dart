@@ -22,20 +22,20 @@ class _HomePageState extends State<HomePage> {
   String searchText = "";
 
   final List<Map<String, dynamic>> locations = [
-    {'name': 'Station USTO', 'lat': 35.7060, 'lng': -0.6190, 'type': 'station', 'velo': 2, 'trot': 4},
-    {'name': 'Station Belgaid', 'lat': 35.7230, 'lng': -0.6030, 'type': 'station', 'velo': 2, 'trot': 4},
+    {'name': 'Station USTO',         'lat': 35.7060, 'lng': -0.6190, 'type': 'station', 'velo': 2, 'trot': 4},
+    {'name': 'Station Belgaid',      'lat': 35.7230, 'lng': -0.6030, 'type': 'station', 'velo': 2, 'trot': 4},
     {'name': 'Station Centre Ville', 'lat': 35.6975, 'lng': -0.6350, 'type': 'station', 'velo': 2, 'trot': 4},
-    {'name': 'Station Gambetta', 'lat': 35.7040, 'lng': -0.6400, 'type': 'station', 'velo': 2, 'trot': 4},
-    {'name': 'Station Maraval', 'lat': 35.7150, 'lng': -0.6300, 'type': 'station', 'velo': 2, 'trot': 4},
-    {'name': 'Station Akid Lotfi', 'lat': 35.7090, 'lng': -0.6200, 'type': 'station', 'velo': 2, 'trot': 4},
-    {'name': 'Station El Bahia', 'lat': 35.7020, 'lng': -0.6450, 'type': 'station', 'velo': 2, 'trot': 4},
-    {'name': 'Station Hai Yasmine', 'lat': 35.7180, 'lng': -0.6120, 'type': 'station', 'velo': 2, 'trot': 4},
+    {'name': 'Station Gambetta',     'lat': 35.7040, 'lng': -0.6400, 'type': 'station', 'velo': 2, 'trot': 4},
+    {'name': 'Station Maraval',      'lat': 35.7150, 'lng': -0.6300, 'type': 'station', 'velo': 2, 'trot': 4},
+    {'name': 'Station Akid Lotfi',   'lat': 35.7090, 'lng': -0.6200, 'type': 'station', 'velo': 2, 'trot': 4},
+    {'name': 'Station El Bahia',     'lat': 35.7020, 'lng': -0.6450, 'type': 'station', 'velo': 2, 'trot': 4},
+    {'name': 'Station Hai Yasmine',  'lat': 35.7180, 'lng': -0.6120, 'type': 'station', 'velo': 2, 'trot': 4},
     {'name': 'Station Medina Jdida', 'lat': 35.6990, 'lng': -0.6370, 'type': 'station', 'velo': 2, 'trot': 4},
-    {'name': 'Université Oran 1', 'lat': 35.6910, 'lng': -0.6410, 'type': 'universite'},
-    {'name': 'USTO MB', 'lat': 35.7060, 'lng': -0.6190, 'type': 'universite'},
-    {'name': 'Université Oran 2', 'lat': 35.7120, 'lng': -0.6220, 'type': 'universite'},
-    {'name': 'Résidence Belgaid', 'lat': 35.7230, 'lng': -0.6030, 'type': 'residence'},
-    {'name': 'Résidence El Barki', 'lat': 35.7080, 'lng': -0.6180, 'type': 'residence'},
+    {'name': 'Université Oran 1',    'lat': 35.6910, 'lng': -0.6410, 'type': 'universite'},
+    {'name': 'USTO MB',              'lat': 35.7060, 'lng': -0.6190, 'type': 'universite'},
+    {'name': 'Université Oran 2',    'lat': 35.7120, 'lng': -0.6220, 'type': 'universite'},
+    {'name': 'Résidence Belgaid',    'lat': 35.7230, 'lng': -0.6030, 'type': 'residence'},
+    {'name': 'Résidence El Barki',   'lat': 35.7080, 'lng': -0.6180, 'type': 'residence'},
   ];
 
   Set<Marker> _markers = {};
@@ -121,112 +121,119 @@ children: [
               child: Column(
                 children: [
 
-                  // ===== COMPTEUR =====
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      margin: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF3D3C3B),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: selectedLocation != null &&
-                              selectedLocation!['type'] == 'station'
-                          ? Row(
-                              children: [
+// ==== COMPTEUR ==============================================================================================================
+ 
+Expanded(
+  flex: 2,
+  child: Container(
+    margin: const EdgeInsets.all(12),
+    decoration: BoxDecoration(
+      color: const Color(0xFF3D3C3B),
+      borderRadius: BorderRadius.circular(20),
+    ),
+    child: selectedLocation != null &&
+            selectedLocation!['type'] == 'station'
+        ? Row(
+            children: [
 
-                                // VELO
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      const SizedBox(width: 15),
-                                      Image.asset(
-                                        'assets/icons/velo.png',
-                                        width: 100,
-                                        height: 100,
-                                      ),
-                                      const SizedBox(width: 20),
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "${selectedLocation!['velo'] ?? 0}",
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 32,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          const Text(
-                                            "Vélo",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-
-                                Container(
-                                  width: 1,
-                                  height: 70,
-                                  color: Colors.white24,
-                                ),
-
-                                // TROTTINETTE
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      const SizedBox(width: 15),
-                                      Image.asset(
-                                        'assets/icons/tro.png',
-                                        width: 50,
-                                        height: 50,
-                                      ),
-                                      const SizedBox(width: 20),
-                                      Column(
-                                        mainAxisAlignment : MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-
-                                       children: [
-                                          Text(
-                                            "${selectedLocation!['trot'] ?? 0}",
-                                            textAlign: TextAlign.right,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 32,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          const Text(
-                                            "Trottinette",
-                                             textAlign: TextAlign.right,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const Center(
-                              child: Text(
-                                "Sélectionnez une station",
-                                style: TextStyle(color: Colors.white, fontSize: 18),
-                              ),
-                            ),
+ // VELO
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/icons/velo.png',
+                      width: 80,
+                      height: 80,
                     ),
-                  ),
+                    const SizedBox(width: 15),
 
-                  // ===== RECHERCHE =====
-                  Expanded(
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${selectedLocation!['velo'] ?? 0}",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Text(
+                          "Vélo",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+  // séparation
+              Container(
+                width: 1,
+                height: 70,
+                color: Colors.white24,
+              ),
+
+ // TROTTINETTE
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/icons/tro.png',
+                      width: 45,
+                      height: 45,
+                    ),
+                    const SizedBox(width: 15),
+
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${selectedLocation!['trot'] ?? 0}",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Text(
+                          "Trottinette",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )
+  : const Center(
+            child: Text(
+              "Sélectionnez une station",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
+          ),
+  ),
+),
+                  
+
+// ===== RECHERCHE ================================================================================================================================================================================================
+                  
+Expanded(
                     flex: 1,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
