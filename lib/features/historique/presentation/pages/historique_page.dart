@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class HistoriquePage extends StatelessWidget {
   final List<Map<String, dynamic>> reservations = [
     {

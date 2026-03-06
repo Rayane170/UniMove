@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'home_page.dart';
-import 'package:your_project/features/reservasion/presentation/pages/reservasion_page.dart';
-import 'package:your_project/features/historique/presentation/pages/historique_page.dart';
-import 'package:your_project/features/profil/presentation/pages/profil_page.dart';
-import 'package:your_project/features/parametre/presentation/pages/parametre_page.dart';
+import 'package:unimove/features/reservation/presentation/pages/reservation_page.dart';
+import 'package:unimove/features/historique/presentation/pages/historique_page.dart';
+import 'package:unimove/features/profil/presentation/pages/profile_page.dart';
+import 'package:unimove/features/parametres/presentation/pages/parametres_page.dart';
 
 class StudentMainPage extends StatefulWidget {
   const StudentMainPage({super.key});
@@ -17,13 +18,13 @@ class _StudentMainPageState extends State<StudentMainPage> {
 
   // Liste des pages côté étudiant ===============================================================================================
 
-  final List<Widget> _pages = [
-    const HomePage(),          // Map / Home
-    const ReservasionPage(),   // Réservation
-    const HistoriquePage(),    // My Reservations / Historique
-    const ProfilPage(),        // Profil
-    const ParametrePage(),     // Paramètres
-  ];
+final List<Widget> _pages = [
+  const HomePage(),
+  const ReservationPage(),
+  const HistoriquePage(),
+  const ProfilePage(),
+  const ParametresPage(),
+];
 
   @override
   Widget build(BuildContext context) {
