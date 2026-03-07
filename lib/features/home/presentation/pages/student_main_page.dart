@@ -18,7 +18,6 @@ class StudentMainPage extends StatefulWidget {
 class _StudentMainPageState extends State<StudentMainPage> {
   int _currentIndex = 0;
 
-  // Liste des pages à afficher
   final List<Widget> _pages = const [
     HomePage(),
     ReservasionPage(),
@@ -27,7 +26,6 @@ class _StudentMainPageState extends State<StudentMainPage> {
     ParametrePage(),
   ];
 
-  // Titres pour l'appBar
   final List<String> _titles = const [
     "Accueil",
     "Réservation",
@@ -39,41 +37,68 @@ class _StudentMainPageState extends State<StudentMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF0F1115),
+
       appBar: AppBar(
-        title: Text(_titles[_currentIndex]),
-        backgroundColor: const Color(0xFF3D3C3B),
+        elevation: 0,
+        backgroundColor: const Color(0xFF0F1115),
+        centerTitle: true,
+
+        title: Text(
+          _titles[_currentIndex],
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      body: _pages[_currentIndex],
+
+      body: SafeArea(
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 250),
+          child: _pages[_currentIndex],
+        ),
+      ),
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color(0xFF3D3C3B),
-        selectedItemColor: Colors.greenAccent,
-        unselectedItemColor: Colors.white,
+        backgroundColor: const Color(0xFF1B1E24),
+
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.grey,
+
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+
         onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
         },
+
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
             label: "Accueil",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.directions_bike),
+            icon: Icon(Icons.directions_bike_outlined),
+            activeIcon: Icon(Icons.directions_bike),
             label: "Réservation",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.history),
+            icon: Icon(Icons.history_outlined),
+            activeIcon: Icon(Icons.history),
             label: "Historique",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person_outline),
+            activeIcon: Icon(Icons.person),
             label: "Profil",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.settings_outlined),
+            activeIcon: Icon(Icons.settings),
             label: "Paramètres",
           ),
         ],

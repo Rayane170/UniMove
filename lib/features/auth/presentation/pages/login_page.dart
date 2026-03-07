@@ -16,141 +16,177 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1E1E1E),
+      body: Container(
 
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
+        // 🌑 Background
+        decoration: const BoxDecoration(
+          gradient: RadialGradient(
+            radius: 1.2,
+            center: Alignment(0, -0.3),
+            colors: [
+              Color(0xFF1B2735),
+              Color(0xFF090A0F),
+            ],
+          ),
+        ),
 
-            child: Column(
-              children: [
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 28),
+              child: Column(
+                children: [
 
-                const Icon(
-                  Icons.directions_bike,
-                  size: 90,
-                  color: Colors.greenAccent,
-                ),
-
-                const SizedBox(height: 10),
-
-                const Text(
-                  "UniMove",
-                  style: TextStyle(
-                    fontSize: 34,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-
-                const SizedBox(height: 40),
-
-                Container(
-                  padding: const EdgeInsets.all(25),
-
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade900,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black54,
-                        blurRadius: 15,
-                        offset: Offset(0, 8),
-                      )
-                    ],
+                  const Icon(
+                    Icons.directions_bike,
+                    color: Color(0xFF2CE27E),
+                    size: 70,
                   ),
 
-                  child: Column(
+                  const SizedBox(height: 10),
+
+                  const Text(
+                    "UniMove",
+                    style: TextStyle(
+                      color: Color(0xFF2CE27E),
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(height: 5),
+
+                  const Text(
+                    "Smart Green Mobility",
+                    style: TextStyle(
+                      color: Colors.white54,
+                      fontSize: 14,
+                    ),
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  // Matricule
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1F2937),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.white10),
+                    ),
+                    child: TextField(
+                      controller: emailController,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                        hintText: "Matricule",
+                        hintStyle: TextStyle(color: Colors.white60),
+                        prefixIcon:
+                            Icon(Icons.person_outline, color: Colors.white70),
+                        suffixIcon:
+                            Icon(Icons.mail_outline, color: Colors.white60),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 18),
+
+                  // Password
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1F2937),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.white10),
+                    ),
+                    child: TextField(
+                      controller: passwordController,
+                      obscureText: true,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                        hintText: "Mot de passe",
+                        hintStyle: TextStyle(color: Colors.white60),
+                        prefixIcon:
+                            Icon(Icons.lock_outline, color: Colors.white70),
+                        suffixIcon:
+                            Icon(Icons.visibility_off, color: Colors.white60),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 25),
+
+                  // 🔘 Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color(0xFF34D399),
+                            Color(0xFF22C55E),
+                          ],
+                        ),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                        ),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const MainHomePage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "Se connecter",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Mot de passe oublié ?",
+                        style: TextStyle(color: Colors.white60),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
-                      TextField(
-                        controller: emailController,
-                        style: const TextStyle(color: Colors.white),
-
-                        decoration: InputDecoration(
-                          labelText: "Email",
-                          labelStyle: const TextStyle(color: Colors.white70),
-                          prefixIcon: const Icon(Icons.email),
-                          filled: true,
-                          fillColor: Colors.grey.shade800,
-
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
+                      const Text(
+                        "Pas encore de compte ?",
+                        style: TextStyle(color: Colors.white60),
                       ),
-
-                      const SizedBox(height: 20),
-
-                      TextField(
-                        controller: passwordController,
-                        obscureText: true,
-                        style: const TextStyle(color: Colors.white),
-
-                        decoration: InputDecoration(
-                          labelText: "Mot de passe",
-                          labelStyle: const TextStyle(color: Colors.white70),
-                          prefixIcon: const Icon(Icons.lock),
-                          filled: true,
-                          fillColor: Colors.grey.shade800,
-
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 25),
-
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-
-                        child: ElevatedButton(
-
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.greenAccent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-
-                          onPressed: () {
-
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const MainHomePage(),
-                              ),
-                            );
-
-                          },
-
-                          child: const Text(
-                            "Se connecter",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 15),
-
                       TextButton(
                         onPressed: () {},
                         child: const Text(
-                          "Mot de passe oublié ?",
-                          style: TextStyle(color: Colors.white70),
+                          "S'inscrire",
+                          style: TextStyle(color: Color(0xFF2CE27E)),
                         ),
                       ),
-
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
