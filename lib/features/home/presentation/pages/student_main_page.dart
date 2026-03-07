@@ -1,10 +1,12 @@
+
 import 'package:flutter/material.dart';
 
+// Pages principales
 import 'home_page.dart';
-import 'package:unimove/features/reservation/presentation/pages/reservation_page.dart';
-import 'package:unimove/features/historique/presentation/pages/historique_page.dart';
-import 'package:unimove/features/profil/presentation/pages/profile_page.dart';
-import 'package:unimove/features/parametres/presentation/pages/parametres_page.dart';
+import '../../../historique/presentation/pages/historique_page.dart';
+import '../../../reservasion/presentation/pages/reservasion_page.dart';
+import '../../../profil/presentation/pages/profil_page.dart';
+import '../../../parametre/presentation/pages/parametre_page.dart';
 
 class StudentMainPage extends StatefulWidget {
   const StudentMainPage({super.key});
@@ -16,35 +18,47 @@ class StudentMainPage extends StatefulWidget {
 class _StudentMainPageState extends State<StudentMainPage> {
   int _currentIndex = 0;
 
-  // Liste des pages côté étudiant ===============================================================================================
+  // Liste des pages à afficher
+  final List<Widget> _pages = const [
+    HomePage(),
+    ReservasionPage(),
+    HistoriquePage(),
+    ProfilPage(),
+    ParametrePage(),
+  ];
 
-final List<Widget> _pages = [
-  const HomePage(),
-  const ReservationPage(),
-  const HistoriquePage(),
-  const ProfilePage(),
-  const ParametresPage(),
-];
+  // Titres pour l'appBar
+  final List<String> _titles = const [
+    "Accueil",
+    "Réservation",
+    "Historique",
+    "Profil",
+    "Paramètres",
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex], 
+      appBar: AppBar(
+        title: Text(_titles[_currentIndex]),
+        backgroundColor: const Color(0xFF3D3C3B),
+      ),
+      body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        backgroundColor: const Color(0xFF3D3C3B),
-        selectedItemColor: const Color(0xFF6ABF4B),
-        unselectedItemColor: Colors.white70,
         type: BottomNavigationBarType.fixed,
+        backgroundColor: const Color(0xFF3D3C3B),
+        selectedItemColor: Colors.greenAccent,
+        unselectedItemColor: Colors.white,
         onTap: (index) {
           setState(() {
-            _currentIndex = index; 
+            _currentIndex = index;
           });
         },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: "Home",
+            label: "Accueil",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.directions_bike),

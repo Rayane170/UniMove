@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
 
 
-children: [
+ children: [
           Expanded(
             flex: 6,
             child: GoogleMap(
@@ -332,4 +332,13 @@ Expanded(
       ),
     );
   }
+ 
+
+ 
+@override
+void dispose() {
+  mapController.dispose();
+  super.dispose();
+}
+
 }
