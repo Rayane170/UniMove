@@ -15,18 +15,29 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final theme = Theme.of(context);
+
     return Scaffold(
+
+      backgroundColor: theme.scaffoldBackgroundColor,
+
       body: Container(
 
-        // 🌑 Background
-        decoration: const BoxDecoration(
+        /// gradient garde le design
+        decoration: BoxDecoration(
           gradient: RadialGradient(
             radius: 1.2,
-            center: Alignment(0, -0.3),
-            colors: [
-              Color(0xFF1B2735),
-              Color(0xFF090A0F),
-            ],
+            center: const Alignment(0, -0.3),
+            colors: theme.brightness == Brightness.dark
+                ? const [
+                    Color(0xFF1B2735),
+                    Color(0xFF090A0F),
+                  ]
+                : const [
+                    Color(0xFFFFFFFF),
+                    Color(0xFFE5E7EB),
+                  ],
           ),
         ),
 
@@ -39,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   const Icon(
                     Icons.directions_bike,
-                    color: Color(0xFF2CE27E),
+                    color: Color(0xFF22C55E),
                     size: 70,
                   ),
 
@@ -48,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                   const Text(
                     "UniMove",
                     style: TextStyle(
-                      color: Color(0xFF2CE27E),
+                      color: Color(0xFF22C55E),
                       fontSize: 34,
                       fontWeight: FontWeight.bold,
                     ),
@@ -56,33 +67,33 @@ class _LoginPageState extends State<LoginPage> {
 
                   const SizedBox(height: 5),
 
-                  const Text(
+                  Text(
                     "Smart Green Mobility",
                     style: TextStyle(
-                      color: Colors.white54,
+                      color: theme.textTheme.bodyMedium!.color!
+                          .withOpacity(0.6),
                       fontSize: 14,
                     ),
                   ),
 
                   const SizedBox(height: 40),
 
-                  // Matricule
+                  /// matricule
                   Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1F2937),
+                      color: theme.cardColor,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: Colors.white10),
                     ),
                     child: TextField(
                       controller: emailController,
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: theme.textTheme.bodyMedium!.color,
+                      ),
                       decoration: const InputDecoration(
                         hintText: "Matricule",
-                        hintStyle: TextStyle(color: Colors.white60),
-                        prefixIcon:
-                            Icon(Icons.person_outline, color: Colors.white70),
-                        suffixIcon:
-                            Icon(Icons.mail_outline, color: Colors.white60),
+                        prefixIcon: Icon(Icons.person_outline),
+                        suffixIcon: Icon(Icons.mail_outline),
                         border: InputBorder.none,
                       ),
                     ),
@@ -90,24 +101,23 @@ class _LoginPageState extends State<LoginPage> {
 
                   const SizedBox(height: 18),
 
-                  // Password
+                  /// password
                   Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1F2937),
+                      color: theme.cardColor,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: Colors.white10),
                     ),
                     child: TextField(
                       controller: passwordController,
                       obscureText: true,
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: theme.textTheme.bodyMedium!.color,
+                      ),
                       decoration: const InputDecoration(
                         hintText: "Mot de passe",
-                        hintStyle: TextStyle(color: Colors.white60),
-                        prefixIcon:
-                            Icon(Icons.lock_outline, color: Colors.white70),
-                        suffixIcon:
-                            Icon(Icons.visibility_off, color: Colors.white60),
+                        prefixIcon: Icon(Icons.lock_outline),
+                        suffixIcon: Icon(Icons.visibility_off),
                         border: InputBorder.none,
                       ),
                     ),
@@ -115,40 +125,26 @@ class _LoginPageState extends State<LoginPage> {
 
                   const SizedBox(height: 25),
 
-                  // 🔘 Button
+                  /// button
                   SizedBox(
                     width: double.infinity,
                     height: 50,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF34D399),
-                            Color(0xFF22C55E),
-                          ],
-                        ),
-                      ),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          shadowColor: Colors.transparent,
-                        ),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const MainHomePage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          "Se connecter",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                    child: ElevatedButton(
+
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const MainHomePage(),
                           ),
+                        );
+                      },
+
+                      child: const Text(
+                        "Se connecter",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -160,9 +156,12 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {},
-                      child: const Text(
+                      child: Text(
                         "Mot de passe oublié ?",
-                        style: TextStyle(color: Colors.white60),
+                        style: TextStyle(
+                          color: theme.textTheme.bodyMedium!.color!
+                              .withOpacity(0.6),
+                        ),
                       ),
                     ),
                   ),
@@ -172,15 +171,22 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+
+                      Text(
                         "Pas encore de compte ?",
-                        style: TextStyle(color: Colors.white60),
+                        style: TextStyle(
+                          color: theme.textTheme.bodyMedium!.color!
+                              .withOpacity(0.6),
+                        ),
                       ),
+
                       TextButton(
                         onPressed: () {},
                         child: const Text(
                           "S'inscrire",
-                          style: TextStyle(color: Color(0xFF2CE27E)),
+                          style: TextStyle(
+                            color: Color(0xFF22C55E),
+                          ),
                         ),
                       ),
                     ],

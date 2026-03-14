@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../../reservasion/presentation/pages/reservasion_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,6 +20,8 @@ class _HomePageState extends State<HomePage> {
   late BitmapDescriptor resIcon;
 
   Map<String, dynamic>? selectedLocation;
+  String? selectedVehicle;
+
   String searchText = "";
 
   final List<Map<String, dynamic>> locations = [
@@ -74,24 +77,22 @@ class _HomePageState extends State<HomePage> {
         Marker(
           markerId: MarkerId(loc['name']),
           position: LatLng(loc['lat'], loc['lng']),
-          infoWindow: InfoWindow(title: loc['name']),
           icon: loc['type'] == 'station'
               ? stationIcon
               : loc['type'] == 'universite'
-                  ? univIcon
-                  : resIcon,
+              ? univIcon
+              : resIcon,
           onTap: () => _selectLocation(loc),
         ),
       );
     }
-
-    setState(() {});
   }
 
   void _selectLocation(Map<String, dynamic> loc) {
 
     setState(() {
       selectedLocation = loc;
+      selectedVehicle = null;
     });
 
     mapController.animateCamera(
@@ -107,11 +108,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
+    final theme = Theme.of(context);
+
     final filteredLocations = locations
-        .where((loc) => loc['name'].toLowerCase().contains(searchText))
+        .where((loc) => loc['name']
+        .toLowerCase()
+        .contains(searchText))
         .toList();
 
     return Scaffold(
+
+      backgroundColor: theme.scaffoldBackgroundColor,
 
       body: Stack(
         children: [
@@ -119,11 +126,9 @@ class _HomePageState extends State<HomePage> {
           GoogleMap(
             onMapCreated: (controller) => mapController = controller,
             initialCameraPosition:
-                const CameraPosition(target: _center, zoom: 13),
+            const CameraPosition(target: _center, zoom: 13),
             markers: _markers,
           ),
-
-          /// PANNEAU BAS PROFESSIONNEL
 
           Positioned(
             bottom: 0,
@@ -134,57 +139,50 @@ class _HomePageState extends State<HomePage> {
 
               padding: const EdgeInsets.symmetric(vertical: 18),
 
-              decoration: const BoxDecoration(
-                color: Color(0xFF0F1115),
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: theme.cardColor,
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black54,
-                    blurRadius: 15,
-                  )
-                ]
               ),
 
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
 
-                  /// BARRE DRAG
-
                   Container(
                     width: 40,
                     height: 5,
                     decoration: BoxDecoration(
-                      color: Colors.grey,
+                      color: theme.textTheme.bodyMedium!.color!
+                          .withOpacity(0.4),
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
 
                   const SizedBox(height: 15),
 
-                  /// SEARCH BAR
-
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
 
                     child: TextField(
 
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: theme.textTheme.bodyMedium!.color,
+                      ),
 
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.search,color: Colors.white54),
-                        hintText: "Rechercher une station...",
-                        hintStyle: const TextStyle(color: Colors.white54),
-                        filled: true,
-                        fillColor: const Color(0xFF1B1E24),
-
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none,
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: theme.colorScheme.primary,
                         ),
+                        hintText: "Rechercher une station...",
+                        hintStyle: TextStyle(
+                          color: theme.textTheme.bodyMedium!.color!
+                              .withOpacity(0.6),
+                        ),
+                        filled: true,
                       ),
 
                       onChanged: (value) {
@@ -196,8 +194,6 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   const SizedBox(height: 15),
-
-                  /// LISTE STATIONS
 
                   SizedBox(
                     height: 45,
@@ -217,21 +213,26 @@ class _HomePageState extends State<HomePage> {
                           onTap: () => _selectLocation(loc),
 
                           child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 8),
-                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            margin:
+                            const EdgeInsets.symmetric(horizontal: 8),
+                            padding:
+                            const EdgeInsets.symmetric(horizontal: 18),
 
                             decoration: BoxDecoration(
                               color: isSelected
-                                  ? const Color(0xFF6ABF4B)
-                                  : const Color(0xFF1B1E24),
-                              borderRadius: BorderRadius.circular(25),
+                                  ? theme.colorScheme.primary
+                                  : theme.cardColor,
+                              borderRadius:
+                              BorderRadius.circular(25),
                             ),
 
                             child: Center(
                               child: Text(
                                 loc['name'],
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color: isSelected
+                                      ? Colors.white
+                                      : theme.textTheme.bodyMedium!.color,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -244,56 +245,51 @@ class _HomePageState extends State<HomePage> {
 
                   const SizedBox(height: 18),
 
-                  /// CARTE STATION
-
                   Container(
 
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    padding: const EdgeInsets.all(20),
+                    margin:
+                    const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.all(18),
 
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1B1E24),
-                      borderRadius: BorderRadius.circular(25),
+                      color: theme.cardColor,
+                      borderRadius:
+                      BorderRadius.circular(25),
                     ),
 
-                    child: Column(
+                    child: Row(
                       children: [
 
-                        Text(
-                          selectedLocation?['name'] ??
-                              "Sélectionnez une station",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedVehicle = "velo";
+                              });
+                            },
+                            child: _vehicleCounter(
+                                context,
+                                "assets/icons/velo2.png",
+                                selectedLocation?['velo'] ?? 0,
+                                selectedVehicle == "velo"),
                           ),
                         ),
 
-                        const SizedBox(height: 18),
+                        const SizedBox(width: 12),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-                          children: [
-
-                            _vehicleCounter(
-                              "assets/icons/velo.png",
-                              selectedLocation?['velo'] ?? 0,
-                              "Vélos"
-                            ),
-
-                            Container(
-                              width: 1,
-                              height: 50,
-                              color: Colors.white24,
-                            ),
-
-                            _vehicleCounter(
-                              "assets/icons/tro.png",
-                              selectedLocation?['trot'] ?? 0,
-                              "Trottinettes"
-                            ),
-                          ],
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedVehicle = "trot";
+                              });
+                            },
+                            child: _vehicleCounter(
+                                context,
+                                "assets/icons/tro.png",
+                                selectedLocation?['trot'] ?? 0,
+                                selectedVehicle == "trot"),
+                          ),
                         ),
                       ],
                     ),
@@ -301,47 +297,35 @@ class _HomePageState extends State<HomePage> {
 
                   const SizedBox(height: 18),
 
-                  /// BOUTON RESERVER
-
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 16),
 
                     child: ElevatedButton(
 
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF6ABF4B),
-                        minimumSize: const Size.fromHeight(55),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
+                      onPressed: () {
 
-                      onPressed: selectedLocation != null &&
-                              selectedLocation!['type'] == 'station'
-                          ? () {
+                        if (selectedVehicle == null) return;
 
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text("Réservation effectuée ✅"),
-                                ),
-                              );
-                            }
-                          : null,
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ReservasionPage(
+                              vehicleType: selectedVehicle,
+                              stationName:
+                              selectedLocation?['name'],
+                            ),
+                          ),
+                        );
+                      },
 
                       child: const Text(
-                        "Réserver un véhicule",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
+                        "Réserver une machine",
                       ),
                     ),
                   ),
 
                   const SizedBox(height: 10),
-
                 ],
               ),
             ),
@@ -351,29 +335,48 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _vehicleCounter(String icon,int value,String label){
+  Widget _vehicleCounter(
+      BuildContext context,
+      String icon,
+      int value,
+      bool selected,
+      ) {
 
-    return Column(
-      children: [
+    final theme = Theme.of(context);
 
-        Image.asset(icon,width:40),
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
 
-        const SizedBox(height:5),
+      padding:
+      const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
 
-        Text(
-          "$value",
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
+      decoration: BoxDecoration(
+        color: selected
+            ? theme.colorScheme.primary
+            : theme.cardColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+
+          Image.asset(icon, width: 35),
+
+          const SizedBox(width: 10),
+
+          Text(
+            "$value",
+            style: TextStyle(
+              color: selected
+                  ? Colors.white
+                  : theme.textTheme.bodyMedium!.color,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-
-        Text(
-          label,
-          style: const TextStyle(color: Colors.white70),
-        )
-      ],
+        ],
+      ),
     );
   }
 

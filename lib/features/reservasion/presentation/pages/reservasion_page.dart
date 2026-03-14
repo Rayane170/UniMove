@@ -1,165 +1,163 @@
 import 'package:flutter/material.dart';
 
 class ReservasionPage extends StatefulWidget {
-  const ReservasionPage({super.key});
+
+  final String? vehicleType;
+  final String? stationName;
+
+  const ReservasionPage({
+    super.key,
+    this.vehicleType,
+    this.stationName,
+  });
 
   @override
   State<ReservasionPage> createState() => _ReservasionPageState();
 }
 
 class _ReservasionPageState extends State<ReservasionPage> {
-  String typeVehicule = "Vélo";
-  int duree = 30;
+
+  int duration = 30;
 
   @override
   Widget build(BuildContext context) {
-    double prix = duree * 0.1;
+
+    final theme = Theme.of(context);
+
+    /// aucune machine
+    if (widget.vehicleType == null) {
+      return Scaffold(
+
+        backgroundColor: theme.scaffoldBackgroundColor,
+
+        appBar: AppBar(
+          title: const Text("Réservation"),
+        ),
+
+        body: Center(
+          child: Text(
+            "Veuillez sélectionner une machine depuis la carte",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: theme.textTheme.bodyMedium!.color,
+            ),
+          ),
+        ),
+      );
+    }
+
+    String image =
+        widget.vehicleType == "velo"
+            ? "assets/icons/velo2.png"
+            : "assets/icons/trot.png";
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1115),
+
+      backgroundColor: theme.scaffoldBackgroundColor,
+
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F1115),
-        elevation: 0,
-        title: const Text("Réserver un vélo"),
+        title: const Text("Réservation"),
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(20),
+
         child: Column(
+
           children: [
 
-            /// CARD VEHICULE
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: const Color(0xFF1B1E24),
-                borderRadius: BorderRadius.circular(20),
+            Image.asset(
+              image,
+              height: 150,
+            ),
+
+            const SizedBox(height: 20),
+
+            Text(
+              widget.stationName ?? "Station inconnue",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: theme.textTheme.bodyMedium!.color,
               ),
-              child: Column(
-                children: [
-                  Image.asset(
-                    "assets/velo.png",
-                    height: 120,
-                  ),
-                  const SizedBox(height: 10),
+            ),
 
-                  Text(
-                    "Vélo #12",
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+            const SizedBox(height: 20),
 
-                  const SizedBox(height: 5),
+            Text(
+              "Matricule : UNI-V12",
+              style: TextStyle(
+                color: theme.textTheme.bodyMedium!.color,
+              ),
+            ),
 
-                  const Text(
-                    "Rue de l'Université",
-                    style: TextStyle(color: Colors.grey),
-                  ),
+            const SizedBox(height: 10),
 
-                  const SizedBox(height: 20),
-
-                  /// TYPE VEHICULE
-                  DropdownButton<String>(
-                    value: typeVehicule,
-                    dropdownColor: Colors.grey.shade900,
-                    style: const TextStyle(color: Colors.white),
-                    items: const [
-                      DropdownMenuItem(
-                        value: "Vélo",
-                        child: Text("Vélo"),
-                      ),
-                      DropdownMenuItem(
-                        value: "Trottinette",
-                        child: Text("Trottinette"),
-                      ),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        typeVehicule = value!;
-                      });
-                    },
-                  ),
-                ],
+            Text(
+              "Batterie : 85%",
+              style: TextStyle(
+                color: theme.textTheme.bodyMedium!.color,
               ),
             ),
 
             const SizedBox(height: 30),
 
-            /// DUREE
-            Align(
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "Durée",
-                style: TextStyle(fontSize: 18, color: Colors.white),
+            Text(
+              "Durée de réservation",
+              style: TextStyle(
+                fontSize: 18,
+                color: theme.textTheme.bodyMedium!.color,
               ),
             ),
 
             Slider(
-              value: duree.toDouble(),
+              value: duration.toDouble(),
               min: 10,
               max: 120,
               divisions: 11,
-              label: duree.toString(),
-              activeColor: Colors.green,
+              label: "$duration min",
+
+              activeColor: theme.colorScheme.primary,
+
               onChanged: (value) {
                 setState(() {
-                  duree = value.toInt();
+                  duration = value.toInt();
                 });
               },
             ),
 
-            const SizedBox(height: 20),
-
-            /// PRIX
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: const Color(0xFF1B1E24),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                children: [
-                  const Text(
-                    "Prix",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "${prix.toStringAsFixed(2)} €",
-                    style: const TextStyle(
-                      fontSize: 30,
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+            Text(
+              "$duration min",
+              style: TextStyle(
+                fontSize: 20,
+                color: theme.colorScheme.primary,
               ),
             ),
 
             const Spacer(),
 
-            /// BOUTON CONFIRMER
             SizedBox(
               width: double.infinity,
-              height: 55,
+
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                onPressed: () {},
+
+                onPressed: () {
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Réservation confirmée"),
+                    ),
+                  );
+                },
+
                 child: const Text(
                   "Confirmer",
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),

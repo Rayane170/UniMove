@@ -5,54 +5,67 @@ class ProfilPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1115),
+      backgroundColor: theme.scaffoldBackgroundColor,
+
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F1115),
-        elevation: 0,
         title: const Text("Profil"),
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(20),
+
         child: Column(
           children: [
 
-            /// CARTE PROFIL
+            /// CARD PROFIL
             Container(
               padding: const EdgeInsets.all(20),
+
               decoration: BoxDecoration(
-                color: const Color(0xFF1B1E24),
+                color: theme.cardColor,
                 borderRadius: BorderRadius.circular(20),
               ),
+
               child: Column(
-                children: const [
+                children: [
 
                   CircleAvatar(
                     radius: 40,
-                    backgroundColor: Colors.green,
-                    child: Icon(
+                    backgroundColor:
+                        theme.colorScheme.primary,
+
+                    child: const Icon(
                       Icons.person,
                       size: 40,
                       color: Colors.white,
                     ),
                   ),
 
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
                   Text(
                     "Rayane Taleb",
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.white,
+                      color:
+                          theme.textTheme.bodyMedium!.color,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
 
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
 
                   Text(
                     "Matricule : UO20250123",
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(
+                      color:
+                          theme.textTheme.bodyMedium!.color!
+                              .withOpacity(0.6),
+                    ),
                   ),
                 ],
               ),
@@ -60,65 +73,117 @@ class ProfilPage extends StatelessWidget {
 
             const SizedBox(height: 25),
 
-            /// STATISTIQUES
+            /// STATS
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
+
               children: [
 
-                _statCard("Trajets", "34", Icons.route),
+                _statCard(
+                  context,
+                  "Trajets",
+                  "34",
+                  Icons.route,
+                ),
 
-                _statCard("CO2", "8.3 kg", Icons.eco),
-
+                _statCard(
+                  context,
+                  "CO2",
+                  "8.3 kg",
+                  Icons.eco,
+                ),
               ],
             ),
 
             const SizedBox(height: 30),
 
-            /// BOUTONS
-            _actionButton(Icons.edit, "Modifier profil"),
+            /// ACTIONS
+
+            _actionButton(
+              context,
+              Icons.edit,
+              "Modifier profil",
+            ),
 
             const SizedBox(height: 10),
 
-            _actionButton(Icons.credit_card, "Ajouter carte"),
+            _actionButton(
+              context,
+              Icons.credit_card,
+              "Ajouter carte",
+            ),
 
             const SizedBox(height: 10),
 
-            _actionButton(Icons.history, "Voir historique"),
+            _actionButton(
+              context,
+              Icons.history,
+              "Voir historique",
+            ),
 
             const SizedBox(height: 10),
 
-            _actionButton(Icons.logout, "Se déconnecter"),
+            _actionButton(
+              context,
+              Icons.logout,
+              "Se déconnecter",
+            ),
           ],
         ),
       ),
     );
   }
 
-  /// WIDGET STATISTIQUE
-  static Widget _statCard(String titre, String valeur, IconData icon) {
+  /// STAT CARD
+  static Widget _statCard(
+    BuildContext context,
+    String titre,
+    String valeur,
+    IconData icon,
+  ) {
+
+    final theme = Theme.of(context);
+
     return Expanded(
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 5),
+        margin:
+            const EdgeInsets.symmetric(horizontal: 5),
         padding: const EdgeInsets.all(20),
+
         decoration: BoxDecoration(
-          color: const Color(0xFF1B1E24),
+          color: theme.cardColor,
           borderRadius: BorderRadius.circular(20),
         ),
+
         child: Column(
           children: [
-            Icon(icon, color: Colors.green, size: 28),
+
+            Icon(
+              icon,
+              color: theme.colorScheme.primary,
+              size: 28,
+            ),
+
             const SizedBox(height: 10),
+
             Text(
               valeur,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
-                color: Colors.white,
+                color:
+                    theme.textTheme.bodyMedium!.color,
                 fontWeight: FontWeight.bold,
               ),
             ),
+
             Text(
               titre,
-              style: const TextStyle(color: Colors.grey),
+              style: TextStyle(
+                color:
+                    theme.textTheme.bodyMedium!.color!
+                        .withOpacity(0.6),
+              ),
             ),
           ],
         ),
@@ -126,23 +191,43 @@ class ProfilPage extends StatelessWidget {
     );
   }
 
-  /// BOUTON ACTION
-  static Widget _actionButton(IconData icon, String text) {
+  /// BUTTON
+  static Widget _actionButton(
+    BuildContext context,
+    IconData icon,
+    String text,
+  ) {
+
+    final theme = Theme.of(context);
+
     return Container(
       width: double.infinity,
       height: 55,
+
       decoration: BoxDecoration(
-        color: const Color(0xFF1B1E24),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(15),
       ),
+
       child: Row(
         children: [
+
           const SizedBox(width: 15),
-          Icon(icon, color: Colors.green),
+
+          Icon(
+            icon,
+            color: theme.colorScheme.primary,
+          ),
+
           const SizedBox(width: 15),
+
           Text(
             text,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
+            style: TextStyle(
+              color:
+                  theme.textTheme.bodyMedium!.color,
+              fontSize: 16,
+            ),
           ),
         ],
       ),

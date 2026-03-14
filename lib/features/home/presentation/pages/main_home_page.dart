@@ -13,13 +13,19 @@ class MainHomePage extends StatefulWidget {
 }
 
 class _MainHomePageState extends State<MainHomePage> {
+
   int _currentIndex = 0;
 
-  final List<Widget> _pages = const [
-    HomePage(),
-    ReservasionPage(),
-    HistoriquePage(),
-    ProfilPage(),
+  final List<Widget> _pages = [
+    const HomePage(),
+
+    const ReservasionPage(
+      vehicleType: "velo",
+      stationName: "Aucune station",
+    ),
+
+    const HistoriquePage(),
+    const ProfilPage(),
   ];
 
   final List<String> _titles = [
@@ -31,19 +37,17 @@ class _MainHomePageState extends State<MainHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: const Color(0xFF0F1115),
+
+      backgroundColor: theme.scaffoldBackgroundColor,
 
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF0F1115),
 
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        backgroundColor: theme.scaffoldBackgroundColor,
 
         title: Text(
           _titles[_currentIndex],
@@ -76,49 +80,56 @@ class _MainHomePageState extends State<MainHomePage> {
         ),
       ),
 
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF1B1E24),
-        ),
-        child: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: const Color(0xFF1B1E24),
+      bottomNavigationBar: BottomNavigationBar(
 
-          selectedItemColor: Colors.green,
-          unselectedItemColor: Colors.grey,
+        currentIndex: _currentIndex,
 
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        type: BottomNavigationBarType.fixed,
 
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
+        backgroundColor: theme.cardColor,
 
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
-              label: "Accueil",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.directions_bike_outlined),
-              activeIcon: Icon(Icons.directions_bike),
-              label: "Réservation",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history_outlined),
-              activeIcon: Icon(Icons.history),
-              label: "Historique",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              activeIcon: Icon(Icons.person),
-              label: "Profil",
-            ),
-          ],
-        ),
+        selectedItemColor:
+            theme.colorScheme.primary,
+
+        unselectedItemColor:
+            theme.textTheme.bodyMedium!.color!
+                .withOpacity(0.6),
+
+        selectedLabelStyle:
+            const TextStyle(fontWeight: FontWeight.bold),
+
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+
+        items: const [
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
+            label: "Accueil",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.directions_bike_outlined),
+            activeIcon: Icon(Icons.directions_bike),
+            label: "Réservation",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history_outlined),
+            activeIcon: Icon(Icons.history),
+            label: "Historique",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            activeIcon: Icon(Icons.person),
+            label: "Profil",
+          ),
+        ],
       ),
     );
   }
